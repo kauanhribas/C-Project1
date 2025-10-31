@@ -31,7 +31,7 @@ void menu(){
          << "3 - Para listar clientes.\n"
          << "4 - Para listar filmes.\n"
          << "5 - Para buscar filmes por cliente.\n"
-         << "6 - Para gerar relatório geral.\n"
+         << "6 - Para gerar relatï¿½rio geral.\n"
          << "0 - Para sair.\n"
          << "Digite sua opcao: ";
 }
@@ -46,6 +46,18 @@ void cadastrarCliente(cliente *c){
     cin >> c->tel;
 }
 
+int verif(int x, cliente vet[], int nC) {
+    for (int i=0; i<nC; i++){
+        int id = vet[i].id;
+        if (x == id){
+            return 1;
+            break;
+        }
+    }
+    return false;
+}
+
+
 void cadastrarFilme(filme *f, cliente vet[], int nC){
     cout << "\nDigite o codigo do filme: ";
     cin >> f->cod;
@@ -57,7 +69,18 @@ void cadastrarFilme(filme *f, cliente vet[], int nC){
     cout << "Digite o ano do filme: ";
     cin >> f->ano;
     cout << "Digite o id do cliente que alugou: ";
-    cin >> f->idCliente;
+    int x;
+    cin >> x;
+
+    int ver = 0;
+    ver = verif(x, vet, nC);
+    while (ver != 1){
+        cout << "Digite o id do cliente que alugou: ";
+        cin >> x;
+        ver = verif(x, vet, nC);
+    
+    f->idCliente = x;
+    }
 }
 
 void listarCliente(cliente vet[]) {
@@ -150,7 +173,7 @@ int main(){
                 juntarClientes(clientes, client);
                 break;
             case 2:
-                cadastrarFilme(&film);
+                cadastrarFilme(&film, clientes, nC);
                 juntarFilmes(filmes, film);
                 break;
             case 3:
